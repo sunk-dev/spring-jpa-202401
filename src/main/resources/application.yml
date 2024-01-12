@@ -1,7 +1,28 @@
 
-server.port=8383
+server:
+  port: 8383
 
-spring.datasource.driver-class-name=org.mariadb.jdbc.Driver
-spring.datasource.url=jdbc:mariadb://localhost:3307/spring
-spring.datasource.username=root
-spring.datasource.password=mariadb
+spring:
+  datasource:
+    driver-class-name: org.mariadb.jdbc.Driver
+    url: jdbc:mariadb://localhost:3307/spring
+    username: root
+    password: mariadb
+  jpa:
+    # sql ??? ???? ?? DBMS? ???? ???????
+    database-platform: org.hibernate.dialect.MariaDB106Dialect
+    hibernate:
+      #ddl? ???? ??
+      ddl-auto: create
+       #create ?? ???? ???
+
+    properties:
+      hibernate:
+        format_sql: true    #sql??? ????? ????? ??
+    database: mysql  #DBMS?? ??
+
+
+logging:
+  level:
+    root: info  #??? info?????
+    org.hibernate.sql: debug #sql? debug??
