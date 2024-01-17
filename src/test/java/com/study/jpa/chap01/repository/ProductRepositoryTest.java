@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.OptionalInt;
 
 import static com.study.jpa.chap01.entity.Product.Category.*;
 import static org.junit.jupiter.api.Assertions.*;
@@ -27,7 +28,7 @@ class ProductRepositoryTest {
 
         Product p1 = Product.builder()
                 .name("아이콘")
-                .category(ELETROIC)
+                .category(ELECTRONIC)
                 .price(200000)
                 .build();
         Product p2 = Product.builder()
@@ -87,11 +88,26 @@ class ProductRepositoryTest {
         //given
         long id=3L;
         //when
-        Product product = productRepository.findById(id).get();
+        Optional<Product> product = productRepository.findById(id);
         //then
         System.out.println("product = " + product);
-        assertEquals("구두",product.getName());
-        assertNotNull(product);
+        //null체크를 간소화 하기 위한 Optional 타입
+        //ifPresent는 null이 아니면 람다의 코드진행, null이면 무시
+        product.ifPresent(p->{
+            assertEquals("구두",p.getName());
+            assertNotNull(p);
+        });
+        //product가 null이면 새로운 new product를 반환하고
+        //null 이 아니면 Optional 안에서 꺼내서 반환
+        Product ppp=product.orElse(new Product());
+        //null이면 예외를 발생시킴,null이 아니면 Optional에서 꺼내서반환
+        Product pppp=product.orElseThrow();
+
+
+
+
+
+
     }
 
 
